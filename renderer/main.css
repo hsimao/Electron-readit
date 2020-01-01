@@ -50,8 +50,9 @@ header {
   flex-grow: 1;
 }
 
-#items {
+main {
   flex-grow: 1;
+  overflow-y: scroll;
 }
 
 #no-items {
@@ -66,6 +67,7 @@ header {
 
 #modal {
   display: flex;
+  display: none;
   align-content: center;
   align-items: center;
   flex-wrap: wrap;
@@ -73,7 +75,6 @@ header {
   width: 100%;
   height: 100%;
   background: rgba(0, 0, 0, 0.85);
-  display: none;
 }
 
 #url {
@@ -95,4 +96,17 @@ header {
 #close-modal,
 #add-item {
   margin-left: 25px;
+}
+
+.read-item {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-bottom: lightgray 2px solid;
+  background: #fafafa;
+}
+
+.read-item img {
+  width: 20%;
+  margin-right: 25px;
 }
