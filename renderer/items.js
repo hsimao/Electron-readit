@@ -1,4 +1,11 @@
+const fs = require('fs');
 const items = document.getElementById('items');
+
+// 從 reader.js 檔案抓取資料並轉成字串後儲存到變數
+let readerJS;
+fs.readFile(`${__dirname}/reader.js`, (err, data) => {
+  readerJS = data.toString();
+});
 
 // 取得瀏覽器端 localStorage readit-items 內已經有的資料
 exports.storage = JSON.parse(localStorage.getItem('readit-items')) || [];
@@ -33,14 +40,29 @@ exports.changeSelection = direction => {
   }
 };
 
-// 打開當前選擇文章
+// 打開當前選擇文章, 使用 proxy BrowserWindow 另開新的溜覽器
 exports.open = () => {
   if (!this.storage.length) return;
 
   const selectedItem = document.getElementsByClassName('read-item selected')[0];
 
   const contentURL = selectedItem.dataset.url;
-  console.log('open item: url', contentURL);
+  const readerWin = window.open(
+    contentURL,
+    '',
+    `
+    maxWidth=2000,
+    maxHeight=2000,
+    width=1200,
+    height=800,
+    backgrounColor=#DEDEDE,
+    nodeIntegration=0,
+    contextIsolation=1
+  `
+  );
+
+  // 注入 js
+  readerWin.eval(readerJS);
 };
 
 exports.addItem = (item, isNew = false) => {
