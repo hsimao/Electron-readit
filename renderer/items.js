@@ -33,10 +33,24 @@ exports.changeSelection = direction => {
   }
 };
 
+// 打開當前選擇文章
+exports.open = () => {
+  if (!this.storage.length) return;
+
+  const selectedItem = document.getElementsByClassName('read-item selected')[0];
+
+  const contentURL = selectedItem.dataset.url;
+  console.log('open item: url', contentURL);
+};
+
 exports.addItem = (item, isNew = false) => {
   const itemNode = document.createElement('div');
 
+  // 設置 class name
   itemNode.setAttribute('class', 'read-item');
+
+  // 設置網址到 data 標籤內 data-url="https://...."
+  itemNode.setAttribute('data-url', item.url);
 
   itemNode.innerHTML = `
   <img src="${item.screenshot}">
@@ -45,8 +59,11 @@ exports.addItem = (item, isNew = false) => {
 
   items.appendChild(itemNode);
 
-  // 新增監聽事件
+  // 新增監聽 click 事件
   itemNode.addEventListener('click', this.select);
+
+  // 新增監聽 dblclick 連點事件
+  itemNode.addEventListener('dblclick', this.open);
 
   // 預設第一個選取
   if (document.getElementsByClassName('read-item').length === 1) {

@@ -103,8 +103,9 @@ main {
   align-items: center;
   padding: 10px;
   border-bottom: lightgray 2px solid;
-  background: #fafafa;
   border-left: 10px solid lightgray;
+  background: #fafafa;
+  -webkit-user-select: none;
 }
 
 .read-item:hover {
