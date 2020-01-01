@@ -1,11 +1,49 @@
 const fs = require('fs');
-const items = document.getElementById('items');
 
 // 從 reader.js 檔案抓取資料並轉成字串後儲存到變數
 let readerJS;
 fs.readFile(`${__dirname}/reader.js`, (err, data) => {
   readerJS = data.toString();
 });
+
+// 監聽從另開閱讀的視窗發送的 'read-done' message 事件
+window.addEventListener('message', e => {
+  // check current message
+  if (e.data.action === 'delete-reader-item') {
+    // close reader window
+    e.source.close();
+    this.delete(e.data.itemIndex);
+  }
+});
+
+// 刪除文章
+exports.delete = itemIndex => {
+  // remove from dom
+  items.removeChild(items.childNodes[itemIndex]);
+
+  // remove from storage
+  this.storage.splice(itemIndex, 1);
+
+  this.save();
+
+  if (this.storage.length) {
+    const newSelectedItemIndex = itemIndex === 0 ? 0 : itemIndex - 1;
+    document
+      .getElementsByClassName('read-item')
+      [newSelectedItemIndex].classList.add('selected');
+  }
+};
+
+// 取得當前選擇文章
+exports.getSelectedItem = () => {
+  const currentItem = document.getElementsByClassName('read-item selected')[0];
+
+  let itemIndex = 0;
+  let child = currentItem;
+  while ((child = child.previousSibling) != null) itemIndex++;
+
+  return { node: currentItem, index: itemIndex };
+};
 
 // 取得瀏覽器端 localStorage readit-items 內已經有的資料
 exports.storage = JSON.parse(localStorage.getItem('readit-items')) || [];
@@ -17,16 +55,14 @@ exports.save = () => {
 
 // 設置 selected class
 exports.select = e => {
-  document
-    .getElementsByClassName('read-item selected')[0]
-    .classList.remove('selected');
+  this.getSelectedItem().node.classList.remove('selected');
 
   e.currentTarget.classList.add('selected');
 };
 
 // 依據上、下鍵盤切換選擇狀態
 exports.changeSelection = direction => {
-  const currentItem = document.getElementsByClassName('read-item selected')[0];
+  const currentItem = this.getSelectedItem().node;
 
   // 點擊鍵盤「上」且文章上方還有文章
   if (direction === 'ArrowUp' && currentItem.previousSibling) {
@@ -44,9 +80,9 @@ exports.changeSelection = direction => {
 exports.open = () => {
   if (!this.storage.length) return;
 
-  const selectedItem = document.getElementsByClassName('read-item selected')[0];
+  const selectedItem = this.getSelectedItem();
 
-  const contentURL = selectedItem.dataset.url;
+  const contentURL = selectedItem.node.dataset.url;
   const readerWin = window.open(
     contentURL,
     '',
@@ -62,7 +98,8 @@ exports.open = () => {
   );
 
   // 注入 js
-  readerWin.eval(readerJS);
+  // 轉換 {{index}}
+  readerWin.eval(readerJS.replace('{{index}}', selectedItem.index));
 };
 
 exports.addItem = (item, isNew = false) => {
