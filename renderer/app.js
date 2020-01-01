@@ -1,4 +1,5 @@
 const { ipcRenderer } = require('electron');
+const items = require('./items');
 
 const showModal = document.getElementById('show-modal');
 const closeModal = document.getElementById('close-modal');
@@ -45,6 +46,9 @@ itemUrl.addEventListener('keyup', e => {
 // 監聽主進程 ipc 相關事件
 ipcRenderer.on('new-item-success', (e, newItem) => {
   console.log(newItem);
+
+  // 將 item 新增到瀏覽器上
+  items.addItem(newItem);
 
   toggleModalButtons();
 
