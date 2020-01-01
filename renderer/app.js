@@ -20,6 +20,13 @@ search.addEventListener('keyup', e => {
   });
 });
 
+// 使用鍵盤上下切換文章選擇狀態
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+    items.changeSelection(e.key);
+  }
+});
+
 // 切換按鈕 disabled 狀態
 const toggleModalButtons = () => {
   if (addItem.disabled === true) {
