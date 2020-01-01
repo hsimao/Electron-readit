@@ -1,11 +1,24 @@
 const { ipcRenderer } = require('electron');
 const items = require('./items');
 
+// dom
 const showModal = document.getElementById('show-modal');
 const closeModal = document.getElementById('close-modal');
 const modal = document.getElementById('modal');
 const addItem = document.getElementById('add-item');
 const itemUrl = document.getElementById('url');
+const search = document.getElementById('search');
+
+// 過濾文章 by search
+search.addEventListener('keyup', e => {
+  Array.from(document.getElementsByClassName('read-item')).forEach(item => {
+    const itemTitle = item.innerText.toLowerCase();
+    const searchValue = search.value.toLowerCase();
+    const hasMatch = itemTitle.includes(searchValue);
+
+    item.style.display = hasMatch ? 'flex' : 'none';
+  });
+});
 
 // 切換按鈕 disabled 狀態
 const toggleModalButtons = () => {
