@@ -48,7 +48,7 @@ ipcRenderer.on('new-item-success', (e, newItem) => {
   console.log(newItem);
 
   // 將 item 新增到瀏覽器上
-  items.addItem(newItem);
+  items.addItem(newItem, true);
 
   toggleModalButtons();
 
