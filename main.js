@@ -1,6 +1,7 @@
 // Modules
 const { app, BrowserWindow, ipcMain } = require('electron');
 const windowStateKeeper = require('electron-window-state');
+const readItem = require('./reatItem');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -8,9 +9,10 @@ let mainWindow;
 
 // 監聽瀏覽器 ipc 相關事件
 ipcMain.on('new-item', (e, itemUrl) => {
-  setTimeout(() => {
-    e.sender.send('new-item-success', 'New item from mail process');
-  }, 2000);
+  // 調用 readItem 封裝方法, 取得網站 title, 螢幕截圖相關資訊後回傳到瀏覽器端
+  readItem(itemUrl, item => {
+    e.sender.send('new-item-success', item);
+  });
 });
 
 // Create a new BrowserWindow when `app` is ready

@@ -44,7 +44,10 @@ itemUrl.addEventListener('keyup', e => {
 
 // 監聽主進程 ipc 相關事件
 ipcRenderer.on('new-item-success', (e, newItem) => {
-  console.log('newItem', newItem);
+  console.log(newItem);
+
   toggleModalButtons();
+
+  modal.style.display = 'none';
   itemUrl.value = '';
 });
