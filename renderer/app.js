@@ -9,6 +9,27 @@ const addItem = document.getElementById('add-item');
 const itemUrl = document.getElementById('url');
 const search = document.getElementById('search');
 
+// 將需要配置到 menu 使用的功能儲存到 window 上以便調用
+// 打開新增文章 modal
+window.newItem = () => showModal.click();
+
+// 打開文章
+window.openItem = items.open;
+
+// 從原生瀏覽器打開文章
+window.openItemNative = items.openNative;
+
+// 刪除文章
+window.deleteItem = () => {
+  const selectedItem = items.getSelectedItem().index;
+  items.delete(selectedItem);
+};
+
+// 搜尋輸入框焦點狀態
+window.searchItems = () => {
+  search.focus();
+};
+
 // 過濾文章 by search
 search.addEventListener('keyup', e => {
   Array.from(document.getElementsByClassName('read-item')).forEach(item => {

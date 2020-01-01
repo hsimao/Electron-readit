@@ -1,4 +1,5 @@
 const fs = require('fs');
+const { shell } = require('electron');
 
 // 從 reader.js 檔案抓取資料並轉成字串後儲存到變數
 let readerJS;
@@ -74,6 +75,14 @@ exports.changeSelection = direction => {
     currentItem.classList.remove('selected');
     currentItem.nextSibling.classList.add('selected');
   }
+};
+
+// 從原生瀏覽器打開文章
+exports.openNative = () => {
+  if (!this.storage.length) return;
+
+  const selectedItem = this.getSelectedItem();
+  shell.openExternal(selectedItem.node.dataset.url);
 };
 
 // 打開當前選擇文章, 使用 proxy BrowserWindow 另開新的溜覽器
