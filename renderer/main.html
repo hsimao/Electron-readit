@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Readit</title>
+    <link rel="stylesheet" href="main.css" />
+  </head>
+  <body>
+    <header>
+      <button id="show-modal">+</button>
+      <input type="text" id="search" placeholder="搜尋" />
+    </header>
+
+    <main>
+      <p id="no-items">No Items</p>
+      <div id="items"></div>
+    </main>
+
+    <div id="modal">
+      <input type="text" id="url" placeholder="輸入網址" />
+      <button id="add-item">新增</button>
+      <button id="close-modal">關閉</button>
+    </div>
+
+    <script>
+      require('./app.js');
+    </script>
+  </body>
+</html>
