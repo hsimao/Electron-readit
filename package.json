@@ -37,7 +37,10 @@
       "target": "dmg"
     },
     "win": {
-      "target": "zip"
+      "target": "zip",
+      "certificateFile": "private/electron-code-signing-window.p12",
+      "certificatePassword": "",
+      "verifyUpdateCodeSignature": false
     },
     "linux": {
       "category": "Utility"
