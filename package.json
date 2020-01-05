@@ -9,7 +9,8 @@
     "debug": "NODE_ENV=development electron --inspect=5858 .",
     "debugbrk": "electron --inspect-brk=5858 .",
     "reset": "git reset --hard",
-    "build:mac": "NODE_ENV=production electron-builder --mac zip"
+    "build:mac": "NODE_ENV=production electron-builder --mac zip",
+    "build:win": "NODE_ENV=production electron-builder --win zip"
   },
   "repository": "https://github.com/hsimao/Electron-readit",
   "author": "Mars",
