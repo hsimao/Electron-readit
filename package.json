@@ -1,6 +1,6 @@
 {
   "name": "Readit",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "Electron Readit Project",
   "main": "main.js",
   "scripts": {
