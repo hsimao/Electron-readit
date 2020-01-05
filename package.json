@@ -1,19 +1,26 @@
 {
-  "name": "electron-readit",
+  "name": "Readit",
   "version": "1.0.0",
-  "description": "",
+  "description": "Electron Readit Project",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
-    "watch": "nodemon --exec 'electron .'",
-    "debug": "electron --inspect=5858 .",
+    "start": "NODE_ENV=development electron .",
+    "watch": "NODE_ENV=development nodemon --exec 'electron .'",
+    "debug": "NODE_ENV=development electron --inspect=5858 .",
     "debugbrk": "electron --inspect-brk=5858 .",
-    "reset": "git reset --hard"
+    "reset": "git reset --hard",
+    "build:mac": "NODE_ENV=production electron-builder --mac zip"
   },
-  "author": "",
+  "repository": "https://github.com/hsimao/Electron-readit",
+  "author": "Mars",
+  "keywords": [
+    "Electron",
+    "Readit"
+  ],
   "license": "",
   "devDependencies": {
     "electron": "^5.0.10",
+    "electron-builder": "^21.2.0",
     "nodemon": "^1.19.2"
   },
   "dependencies": {
