@@ -12,7 +12,8 @@
     "build:mac": "NODE_ENV=production electron-builder --mac",
     "build:win": "NODE_ENV=production electron-builder --win",
     "build:linux": "NODE_ENV=production electron-builder --l",
-    "build": "NODE_ENV=production electron-builder -mwl"
+    "build": "NODE_ENV=production electron-builder -mwl",
+    "release": "NODE_ENV=production electron-builder --mac -p 'onTagOrDraft'"
   },
   "repository": "https://github.com/hsimao/Electron-readit",
   "author": "Mars",
@@ -32,6 +33,9 @@
   "build": {
     "appId": "com.hsimao.readit",
     "copyright": "Copyright 2020 Electron Readit",
+    "publish": {
+      "provider": "github"
+    },
     "mac": {
       "category": "public.app-category.productivity",
       "target": "dmg"
