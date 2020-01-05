@@ -2,6 +2,7 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
 const windowStateKeeper = require('electron-window-state');
 const readItem = require('./reatItem');
+const updater = require('./updater');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -17,6 +18,9 @@ ipcMain.on('new-item', (e, itemUrl) => {
 
 // Create a new BrowserWindow when `app` is ready
 function createWindow() {
+  // 3 秒後檢查更新
+  setTimeout(updater, 3000);
+
   // 預設視窗配置
   let state = windowStateKeeper({
     defaultWidth: 500,
